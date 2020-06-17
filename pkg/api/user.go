@@ -2,6 +2,7 @@ package api
 
 import (
 	"database/sql"
+	"go-simple-arch/pkg/model"
 	"go-simple-arch/pkg/repository"
 	"log"
 	"net/http"
@@ -24,6 +25,9 @@ func NewUserAPI(router *gin.RouterGroup, repo repository.UserRepository) {
 	{
 		userRoutes.GET("", userAPI.GetAll)
 		userRoutes.GET("/:id", userAPI.GetByID)
+		userRoutes.POST("", userAPI.Create)
+		userRoutes.PUT("", userAPI.Update)
+		userRoutes.DELETE("/:id", userAPI.Delete)
 	}
 }
 
@@ -60,4 +64,57 @@ func (api *UserAPI) GetByID(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, result)
+}
+
+// Create Userを作成します
+func (api *UserAPI) Create(c *gin.Context) {
+	var user model.User
+	c.BindJSON(&user)
+
+	err := api.repository.Create(user)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err)
+		log.Println(err)
+		return
+	}
+	c.JSON(http.StatusCreated, nil)
+}
+
+// Update Userを更新します。
+func (api *UserAPI) Update(c *gin.Context) {
+	var user model.User
+	c.BindJSON(&user)
+
+	err := api.repository.Update(user)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, err.Error())
+		} else {
+			c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		log.Println(err)
+		return
+	}
+
+	c.JSON(http.StatusOK, nil)
+}
+
+// Delete Userを削除します
+func (api *UserAPI) Delete(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	err := api.repository.Delete(id)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, err.Error())
+		} else {
+			c.JSON(http.StatusInternalServerError, err.Error())
+		}
+		log.Println(err)
+		return
+	}
+
+	c.JSON(http.StatusNoContent, nil)
 }

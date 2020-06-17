@@ -126,7 +126,10 @@ func (r *userRepository) Update(user model.User) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(rowsAffect)
+
+	if rowsAffect == 0 {
+		return sql.ErrNoRows
+	}
 
 	return err
 }
@@ -154,7 +157,10 @@ func (r *userRepository) Delete(id int) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(rowsAffect)
+
+	if rowsAffect == 0 {
+		return sql.ErrNoRows
+	}
 
 	return err
 }
