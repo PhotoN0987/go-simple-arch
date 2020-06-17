@@ -1,7 +1,8 @@
 package server
 
 import (
-	"net/http"
+	"go-simple-arch/pkg/api"
+	"go-simple-arch/pkg/repository"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -21,15 +22,11 @@ func newRouter() *gin.Engine {
 func (s *Server) SetUpRouter() *gin.Engine {
 	// Group v1
 	apiV1 := s.router.Group("api/v1")
-	s.testRoutes(apiV1)
+	s.userRoutes(apiV1)
 	return s.router
 }
 
-func (s *Server) testRoutes(api *gin.RouterGroup) {
-	userRoutes := api.Group("/test")
-	{
-		userRoutes.GET("", func(c *gin.Context) {
-			c.JSON(http.StatusOK, "test")
-		})
-	}
+func (s *Server) userRoutes(rg *gin.RouterGroup) {
+	repository := repository.NewUserRepository(s.db)
+	api.NewUserAPI(rg, repository)
 }

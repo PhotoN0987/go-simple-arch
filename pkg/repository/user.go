@@ -4,16 +4,16 @@ import (
 	"database/sql"
 	"fmt"
 	"go-simple-arch/pkg/database"
-	"go-simple-arch/pkg/models"
+	"go-simple-arch/pkg/model"
 	"log"
 )
 
 // UserRepository repository
 type UserRepository interface {
-	GetAll() ([]models.UserTable, error)
-	GetByID(id int) (models.UserTable, error)
-	Create(user models.User) error
-	Update(user models.User) error
+	GetAll() ([]model.UserTable, error)
+	GetByID(id int) (model.UserTable, error)
+	Create(user model.User) error
+	Update(user model.User) error
 	Delete(id int) error
 }
 
@@ -29,8 +29,8 @@ func NewUserRepository(db *database.DB) UserRepository {
 }
 
 // GetAll Get all usersdata
-func (r *userRepository) GetAll() ([]models.UserTable, error) {
-	users := []models.UserTable{}
+func (r *userRepository) GetAll() ([]model.UserTable, error) {
+	users := []model.UserTable{}
 
 	query := `
 		SELECT * FROM users
@@ -41,7 +41,7 @@ func (r *userRepository) GetAll() ([]models.UserTable, error) {
 	}
 
 	for rows.Next() {
-		var user models.UserTable
+		var user model.UserTable
 		err := rows.Scan(&user.ID, &user.Name, &user.Email, &user.CreatedAt, &user.UpdatedAt)
 
 		if err != nil {
@@ -55,8 +55,8 @@ func (r *userRepository) GetAll() ([]models.UserTable, error) {
 }
 
 // GetByID Get single usersdata
-func (r *userRepository) GetByID(id int) (models.UserTable, error) {
-	user := models.UserTable{}
+func (r *userRepository) GetByID(id int) (model.UserTable, error) {
+	user := model.UserTable{}
 
 	query := `
 		SELECT * FROM users
@@ -82,8 +82,8 @@ func (r *userRepository) GetByID(id int) (models.UserTable, error) {
 	return user, err
 }
 
-// Create Add user
-func (r *userRepository) Create(user models.User) error {
+// Create Create user
+func (r *userRepository) Create(user model.User) error {
 	query := `
 		INSERT INTO 
 		users(name, email) 
@@ -110,7 +110,7 @@ func (r *userRepository) Create(user models.User) error {
 }
 
 // Update Update user
-func (r *userRepository) Update(user models.User) error {
+func (r *userRepository) Update(user model.User) error {
 	query := `
 		UPDATE users 
 		SET name=?, email=? 
