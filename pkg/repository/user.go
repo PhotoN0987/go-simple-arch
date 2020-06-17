@@ -59,17 +59,12 @@ func (r *userRepository) GetByID(id int) (model.UserTable, error) {
 	user := model.UserTable{}
 
 	query := `
-		SELECT * FROM users
+		SELECT * FROM users 
 		WHERE id=?
 	`
-	r.db.QueryRow(query, id)
+	row := r.db.QueryRow(query, id)
 
-	row, err := r.db.Query(query)
-	if err != nil {
-		return user, err
-	}
-
-	err = row.Scan(&user.ID, &user.Name, &user.Email, &user.CreatedAt, &user.UpdatedAt)
+	err := row.Scan(&user.ID, &user.Name, &user.Email, &user.CreatedAt, &user.UpdatedAt)
 
 	if err != nil {
 		if err == sql.ErrNoRows {
