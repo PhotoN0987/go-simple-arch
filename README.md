@@ -18,9 +18,17 @@ HTTPメソッドの判断とルーティング処理を公式のみで書くと�
 ### github.com/gin-contrib/cors
 
 CORS設定で必要。net/httpでやろうとすると、ginを使用する場合記述がめんどくさいので採用。  
-CORS設定できないとローカルでテストができない。
+CORS設定できないとローカルで動作確認ができない。
 [CORSについて](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS)
 
 ### github.com/go-sql-driver/mysql  
 
 公式のデータベースパッケージを、mysqlで使用するために拡張してくれる。
+
+## github.com/stretchr/testify
+
+UnitTest用のパッケージ。
+
+## gopkg.in/go-playground/assert.v1 v1.2.1
+
+UnitTestの結果判定を行うために採用。
