@@ -1,5 +1,5 @@
 .DS_Store
-config.ini
+go.sum
 *.log
 
 # 実行ファイル
