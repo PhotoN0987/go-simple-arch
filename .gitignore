@@ -4,4 +4,4 @@ go.sum
 
 # 実行ファイル
 __debug_bin
-go-mysql-api
+go-simple-arch
