@@ -6,7 +6,7 @@ services:
     build:
       context: ../
       dockerfile: dockerfile
-    container_name: go-mysql-api-mysql
+    container_name: go-simple-arch-mysql
     image: mysql:5.7
     restart: always
     volumes:
@@ -14,7 +14,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       MYSQL_ROOT_PASSWORD: rootPassword
-      MYSQL_DATABASE: sample
+      MYSQL_DATABASE: go-simple-arch
       MYSQL_USER:     user
       MYSQL_PASSWORD: password
       TZ: Asia/Tokyo
@@ -22,7 +22,7 @@ services:
       - 3306:3306
 
   pma: # phpMyAdmin container
-    container_name: go-mysql-api-pma
+    container_name: go-simple-arch-pma
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     environment:

@@ -4,23 +4,87 @@ goでAPIを作成する際のシンプルな設計のサンプル。
 グロースや保守性を考えると品質はあまり良くないが、  
 「参考に作ったらできた。なぜ動いてるかは謎」って状態を極力避けるために、あえて部品化は抑えて作成。
 
-## 使用パッケージ
+# 実行方法
+
+## Docker コンテナ起動
+
+dockerフォルダに移動後下記コマンドで、DB環境が作成される。  
+下記にアクセスするとphpMyAdminに移動する。  
+http://localhost:3000
+
+```bash
+# docker初回起動
+docker-compose up -d --build
+
+# dockerコンテナを起動
+docker-compose up -d
+
+# dockerコンテナを停止
+docker-compose stop
+
+# docker関連のファイルをいじった場合、下記のコマンド
+docker-compose down
+docker-compose up -d --build
+```
+
+## パッケージのインストール
+
+後述の「使用パッケージ」をインストールする
+
+```bash
+
+# パッケージインストール
+go get パッケージ名
+
+```
+
+## 実行ファイルの作成・実行
+
+プロジェクトフォルダの直下(go.modと同じ階層)へ移動する。
+
+```bash
+
+# ビルド
+go build
+
+# 実行
+./go-simple-arch
+
+```
+
+
+# ファイルアップロード & ダウンロード サンプル
+
+プログラム起動後、下記URLにアクセスするとファイルのアップロードとダウンロードの行えるサンプルページがある。
+
+http://localhost:3000/web/upload.html
+http://localhost:3000/web/download.html
+
+# 使用パッケージ
 
 パッケージは、公式以外は基本使用しない方針にする。  
 初心者だとgo言語の仕様なのか、パッケージの機能なのか判断難しいからね。  
 公式以外で採用したパッケージは以下の通り。
 
-### github.com/gin-gonic/gin  
+## github.com/gin-gonic/gin  
 
 HTTPメソッドの判断とルーティング処理を公式のみで書くと、不必要に冗長になるので採用。  
 似たようなパッケージでechoやgolliraもあるのだが、githubのスター数が一番多いのでginを採用した。
 
-### github.com/gin-contrib/cors
+## github.com/gin-contrib/cors
 
 CORS設定で必要。net/httpでやろうとすると、ginを使用する場合記述がめんどくさいので採用。  
-CORS設定できないとローカルでテストができない。
+CORS設定できないとローカルで動作確認ができない。
 [CORSについて](https://developer.mozilla.org/ja/docs/Web/HTTP/CORS)
 
-### github.com/go-sql-driver/mysql  
+## github.com/go-sql-driver/mysql  
 
 公式のデータベースパッケージを、mysqlで使用するために拡張してくれる。
+
+## github.com/stretchr/testify
+
+UnitTest用のパッケージ。
+
+## gopkg.in/go-playground/assert.v1 v1.2.1
+
+UnitTestの結果判定を行うために採用。
