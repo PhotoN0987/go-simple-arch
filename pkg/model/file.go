@@ -3,7 +3,6 @@ package model
 import (
 	"encoding/base64"
 	"log"
-	"mime"
 	"os"
 )
 
@@ -12,6 +11,7 @@ type File struct {
 	ID          string `json:"id"`
 	Name        string `json:"name"`
 	ContentType string `json:"contentType"`
+	FileLength  uint64 `json:"fileLength"`
 	Base64      string `json:"base64"`
 }
 
@@ -19,14 +19,7 @@ type File struct {
 func (f File) Create() error {
 	data, _ := base64.StdEncoding.DecodeString(f.Base64)
 
-	fileType, err := mime.ExtensionsByType(f.ContentType)
-	if err != nil {
-		log.Println(err.Error())
-		return err
-	}
-
-	fileName := f.Name + fileType[0]
-	file, err := os.Create("./uploads/" + fileName)
+	file, err := os.Create("./uploads/" + f.Name)
 	if err != nil {
 		log.Println(err.Error())
 		return err

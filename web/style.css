@@ -1,0 +1,32 @@
+.content {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#drop-area {
+  overflow: hidden;
+  padding: 40px 10px;
+  background: #efefef;
+  border: 3px #afafaf dashed;
+  border-radius: 5px;
+  color: #999999;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#drop-area.dragover,
+#drop-area:active {
+  background: #bed3fc;
+  border-color: #86b7f8;
+  color: #86b7f8;
+}
+
+#input {
+  display: none;
+}
+
+#preview {
+  display: block;
+  margin: 15px auto;
+}
