@@ -85,6 +85,6 @@ CORS設定できないとローカルで動作確認ができない。
 
 UnitTest用のパッケージ。
 
-## gopkg.in/go-playground/assert.v1 v1.2.1
+## gopkg.in/go-playground/assert.v1
 
 UnitTestの結果判定を行うために採用。
