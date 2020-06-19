@@ -57,7 +57,7 @@ go build
 
 プログラム起動後、下記URLにアクセスするとファイルのアップロードとダウンロードの行えるサンプルページがある。
 
-http://localhost:3000/web/upload.html
+http://localhost:3000/web/upload.html  
 http://localhost:3000/web/download.html
 
 # 使用パッケージ
