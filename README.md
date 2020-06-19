@@ -10,7 +10,7 @@ goでAPIを作成する際のシンプルな設計のサンプル。
 
 dockerフォルダに移動後下記コマンドで、DB環境が作成される。  
 下記にアクセスするとphpMyAdminに移動する。  
-http://localhost:3000
+http://localhost:8080
 
 ```bash
 # docker初回起動
