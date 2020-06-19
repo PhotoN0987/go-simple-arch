@@ -2,6 +2,8 @@ package api
 
 import (
 	"go-simple-arch/pkg/model"
+	"path/filepath"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,14 +16,26 @@ func NewFileAPI(router *gin.RouterGroup) {
 	fileAPI := FileAPI{}
 	fileUploadRoutes := router.Group("/file")
 	{
-		fileUploadRoutes.GET("/:id", fileAPI.GetFile)
+		fileUploadRoutes.GET("/:filename", fileAPI.GetFile)
 		fileUploadRoutes.POST("", fileAPI.UploadFile)
 	}
 }
 
-// GetFile ファイルデータを取得します。
+// GetFile ファイルデータをDownloadします。
 func (api *FileAPI) GetFile(c *gin.Context) {
-	c.JSON(501, "開発中、できるまで待っててね。")
+	directory := "upload_files/"
+
+	fileName := c.Param("filename")
+	targetPath := filepath.Join(directory, fileName)
+
+	if !strings.HasPrefix(filepath.Clean(targetPath), directory) {
+		c.String(403, "ファイルのダウンロードに失敗しました")
+		return
+	}
+
+	c.Header("Content-Disposition", "attachment; filename="+fileName)
+	c.Header("Content-Type", "application/octet-stream")
+	c.File(targetPath)
 }
 
 // UploadFile ファイルデータをUploadします。
@@ -30,8 +44,8 @@ func (api *FileAPI) UploadFile(c *gin.Context) {
 	c.BindJSON(&file)
 	err := file.Create()
 	if err == nil {
-		c.JSON(201, "ファイルアップロード完了")
+		c.String(201, "ファイルアップロード完了")
 	} else {
-		c.JSON(400, "ファイルアップロードに失敗しました")
+		c.String(400, "ファイルのアップロードに失敗しました")
 	}
 }

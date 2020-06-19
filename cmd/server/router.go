@@ -12,8 +12,12 @@ import (
 func newRouter() *gin.Engine {
 	router := gin.Default()
 
-	// すべてのアクセス許可
-	config := cors.Config{AllowOrigins: []string{"*"}, AllowHeaders: []string{"*"}}
+	// すべてのアクセス許可 & Content-Disposition許可
+	config := cors.Config{
+		AllowOrigins:  []string{"*"},
+		AllowHeaders:  []string{"*"},
+		ExposeHeaders: []string{"Content-Disposition"},
+	}
 	router.Use(cors.New(config))
 	router.StaticFS("/web", http.Dir("web"))
 
