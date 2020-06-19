@@ -1,6 +1,8 @@
 .DS_Store
 go.sum
 *.log
+uploads/*
+!.gitkeep
 
 # 実行ファイル
 __debug_bin
