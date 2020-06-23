@@ -8,7 +8,8 @@ goでAPIを作成する際のシンプルな設計のサンプル。
 
 ## Docker コンテナ起動
 
-dockerフォルダに移動後下記コマンドで、DB環境が作成される。  
+dockerフォルダに移動後下記コマンドで、
+アプリケーション環境が作成され、実行される。  
 下記にアクセスするとphpMyAdminに移動する。  
 http://localhost:8080
 
@@ -27,15 +28,9 @@ docker-compose down
 docker-compose up -d --build
 ```
 
-## パッケージのインストール
-
-後述の「使用パッケージ」をインストールする
-
-```bash
-
-# パッケージインストール
-go get パッケージ名
-
+APIのテスト
+``` bash
+curl -i -X GET 'http://localhost:3000/api/v1/users'
 ```
 
 ## 実行ファイルの作成・実行

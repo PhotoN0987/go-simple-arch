@@ -1,5 +1,24 @@
-FROM mysql:5.7
+FROM golang:1.14.4-alpine3.12 as builder
 
-ADD ./docker/my.cnf /etc/mysql/my.cnf
+RUN apk update && apk upgrade && \
+  apk --update add git make
 
-RUN chmod 644 /etc/mysql/my.cnf
+WORKDIR /app
+
+COPY . .
+
+RUN go build -o go-simple-arch main.go
+
+FROM alpine:latest
+
+RUN apk update && apk upgrade && \
+  apk --update --no-cache add tzdata && \
+  mkdir /app && mkdir /log
+
+WORKDIR /app 
+
+EXPOSE 3000
+
+COPY --from=builder /app/go-simple-arch /app
+
+CMD /app/go-simple-arch
