@@ -23,7 +23,7 @@ func NewFileAPI(router *gin.RouterGroup) {
 
 // GetFile ファイルデータをDownloadします。
 func (api *FileAPI) GetFile(c *gin.Context) {
-	directory := "upload_files/"
+	directory := "web/upload_files/"
 
 	fileName := c.Param("filename")
 	targetPath := filepath.Join(directory, fileName)

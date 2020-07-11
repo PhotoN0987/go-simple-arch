@@ -1,7 +1,7 @@
 .DS_Store
 go.sum
 *.log
-upload_files/*
+web/upload_files/*
 !.gitkeep
 
 # 実行ファイル

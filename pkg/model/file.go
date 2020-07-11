@@ -19,7 +19,7 @@ type File struct {
 func (f File) Create() error {
 	data, _ := base64.StdEncoding.DecodeString(f.Base64)
 
-	file, err := os.Create("./upload_files/" + f.Name)
+	file, err := os.Create("./web/upload_files/" + f.Name)
 	if err != nil {
 		log.Println(err.Error())
 		return err
