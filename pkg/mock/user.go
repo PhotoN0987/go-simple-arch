@@ -24,9 +24,9 @@ func (_m *UserRepository) GetByID(id int) (model.UserTable, error) {
 }
 
 // Create is mock function
-func (_m *UserRepository) Create(user model.User) error {
+func (_m *UserRepository) Create(user model.User) (int64, error) {
 	ret := _m.Called(user)
-	return ret.Error(0)
+	return ret.Get(0).(int64), ret.Error(1)
 }
 
 // Update is mock function
