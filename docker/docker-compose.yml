@@ -13,6 +13,7 @@ services:
     volumes:
       - ../config.json:/app/config.json
       - ../log:/app/log
+      - ../upload_files:/app/upload_files
       
   mysql: # Mysql container
     build:
