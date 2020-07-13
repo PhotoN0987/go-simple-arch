@@ -12,7 +12,7 @@ import (
 type UserRepository interface {
 	GetAll() ([]model.UserTable, error)
 	GetByID(id int) (model.UserTable, error)
-	Create(user model.User) error
+	Create(user model.User) (int64, error)
 	Update(user model.User) error
 	Delete(id int) error
 }
@@ -78,7 +78,7 @@ func (r *userRepository) GetByID(id int) (model.UserTable, error) {
 }
 
 // Create Create user
-func (r *userRepository) Create(user model.User) error {
+func (r *userRepository) Create(user model.User) (int64, error) {
 	query := `
 		INSERT INTO 
 		users(name, email) 
@@ -86,22 +86,22 @@ func (r *userRepository) Create(user model.User) error {
 	`
 	stmtInsert, err := r.db.Prepare(query)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	defer stmtInsert.Close()
 
 	result, err := stmtInsert.Exec(user.Name, user.Email)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	lastInsertID, err := result.LastInsertId()
 	if err != nil {
-		return err
+		return 0, err
 	}
 	fmt.Println(lastInsertID)
 
-	return err
+	return lastInsertID, err
 }
 
 // Update Update user

@@ -82,7 +82,7 @@ func TestCreate(t *testing.T) {
 	gin.SetMode(gin.TestMode)
 
 	mockUserRepo := new(mock.UserRepository)
-	mockUserRepo.On("Create", mockUser).Return(nil).Once()
+	mockUserRepo.On("Create", mockUser).Return(int64(mockUser.ID), nil).Once()
 
 	router, rg := newMockRouter()
 	api.NewUserAPI(rg, mockUserRepo)

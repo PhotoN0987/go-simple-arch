@@ -71,13 +71,14 @@ func (api *UserAPI) Create(c *gin.Context) {
 	var user model.User
 	c.BindJSON(&user)
 
-	err := api.repository.Create(user)
+	id, err := api.repository.Create(user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		log.Println(err)
 		return
 	}
-	c.JSON(http.StatusCreated, nil)
+
+	c.JSON(http.StatusCreated, model.CreatedResponse{ID: id})
 }
 
 // Update Userを更新します。
